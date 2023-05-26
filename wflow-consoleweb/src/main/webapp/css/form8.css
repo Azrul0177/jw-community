@@ -128,7 +128,7 @@ body .subform-cell > .subform-container.has-frame, .form-cell > .subform-contain
     float: right;
 }
 .form-cell > label.label + div.form-clear,
-.subform-cell > label.label + div.subform-clear{
+.subform-cell > label.label + div.form-clear{
     clear: both;
     float: unset !important;
     width: unset !important;
@@ -162,11 +162,7 @@ body .subform-cell > .subform-container.has-frame, .form-cell > .subform-contain
     color: #dc3545;
 }
 .form-cell-full {
-    flex: 0 0 100%;
-}
-.subform-clear + *,
-.form-clear + * {
-    flex: 0 0 100%;
+    width: 100% !important;
 }
 .form-column-horizontal,
 .subform-column-horizontal{
@@ -194,13 +190,11 @@ body .subform-cell > .subform-container.has-frame, .form-cell > .subform-contain
     box-shadow: none;
 }
 .form-section, .subform-section {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
+    display: block;
 }
-
+.form-column, .subform-column {
+    float:left;
+}
 body #form-canvas {
     margin: 0;
 }
@@ -829,7 +823,7 @@ body.rtl .hasDatepicker + a + a{
 
 /* spreadsheet */
 .spreadsheet_container {
-    flex: 0 0 100%;
+    width: 100% !important;
     height: 100%;
 }
 .htMobileEditorContainer {
@@ -1165,10 +1159,19 @@ body.rtl .handsontable .htCore tr td:last-child {
     }
 }
 
+.form-cell table:not([class]) td, .form-cell table:not([class]) th, .subform-cell table:not([class]) td, .subform-cell table:not([class]) th {
+    border: solid 1px silver;
+    margin: 0px;
+    padding: 3px;
+}
+
 /* advanced grid */
 .grid.adgrid {
     width: 100%;
     position: relative;
+}
+.grid.adgrid .pq-header-outer {
+    height: 25px !important;
 }
 .grid.adgrid .pq-grid-title{
     display:none;
@@ -1207,7 +1210,11 @@ body.rtl .handsontable .htCore tr td:last-child {
 }
 .grid.adgrid .editor-cell .hasDatepicker + a{
     right: 8px;
-    bottom: 35px;
+    top: 14px;
+}
+.grid.adgrid .editor-cell .hasDatepicker + a + a{
+    right: 30px;
+    top: 14px;
 }
 .grid.adgrid .editor-cell .actions-buttons{
     text-align: right;
@@ -1292,13 +1299,32 @@ body.rtl .form-edit-btn{
     bottom:20px;
 }
 
-/* advanced grid */
-.grid.adgrid .pq-header-outer {
-    height: 25px !important;
-}
-
 /* process enhancement comments*/
 .comments_thread .comment {
     width: 100% !important;
     margin-top: 20px !important;
+}
+
+.subform_wrapper .subform-container.no-frame {
+    border: 0;
+    padding: 0;
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+}
+
+.subform_repeater .repeater-action a {
+    height: 20px !important;
+    width: 20px !important;
+    border-radius: 50%;
+}
+
+.subform_repeater .subform_repeater_action button{
+    color: #fff;
+    background-color: var(--theme-button-bg, #0d6efd);
+    outline: 0;
+    border-radius: .25rem;
+    border: 1px solid var(--theme-button-bg, #0d6efd);
+    padding: 5px;
 }

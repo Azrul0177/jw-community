@@ -2677,7 +2677,7 @@
         }
         $(".responsive-buttons button").removeClass("active");
         $(".responsive-buttons button#"+view+"-view").addClass("active");
-	$("body, #builder_canvas, #previewView").removeClass("mobile tablet desktop").addClass(view);
+	$("body, #builder_canvas, #previewView").removeClass("mobile tablet desktop noviewport").addClass(view);
         
         //for builder
         $("#element-highlight-box, #element-select-box").hide();
@@ -3135,6 +3135,8 @@
      * Render additional menus to adding bar
      */
     intBuilderMenu : function() {
+        UI.userview_app_id = CustomBuilder.appId;
+        
         if ($("#quick-nav-bar").find("#builder-quick-nav").length === 0) {
             $("#quick-nav-bar").append('<div id="closeQuickNav"></div>');
             $("#quick-nav-bar").append('<div id="builder-quick-nav">\
@@ -5162,6 +5164,8 @@ _CustomBuilder.Builder = {
             } else {
                 $(box).find(".up-btn, .down-btn").show();
             }
+        }
+        if (!isSubSelect && component.builderTemplate.isDraggable(data, component)) {
             $(box).find(".element-name").addClass("moveable");
         }
 
@@ -5227,8 +5231,8 @@ _CustomBuilder.Builder = {
     _initBox: function () {
         var self = this;
         
-        $("#element-highlight-name .element-name.moveable, #element-select-name .element-name.moveable").off("mousedown.builder touchstart.builder");
-        $("#element-highlight-name .element-name.moveable, #element-select-name .element-name.moveable").on("mousedown.builder touchstart.builder", function (event) {
+        $("body").off("mousedown.buildermove touchstart.buildermove", "#element-highlight-name .element-name.moveable, #element-select-name .element-name.moveable");
+        $("body").on("mousedown.buildermove touchstart.buildermove", "#element-highlight-name .element-name.moveable, #element-select-name .element-name.moveable", function (event) {
             self.mousedown = true;
             try {
                 CustomBuilder.checkChangeBeforeCloseElementProperties(function(hasChange) {
@@ -5272,14 +5276,7 @@ _CustomBuilder.Builder = {
                             self.elementPosY = y;
 
                             if (self.component.builderTemplate.dragStart)
-                                self.dragElement = self.component.builderTemplate.dragStart(self.dragElement, self.component);
-
-                            if (self.component.builderTemplate.isAbsolutePosition(self.data, self.component)) {
-                                var elementOffset = self.dragElement.offset();
-                                var xDiff = x - elementOffset.left;
-                                var yDiff = y - elementOffset.top;
-                                self.dragElement.data("cursorPosition", {"x" : xDiff, "y" : yDiff});
-                            }    
+                                self.dragElement = self.component.builderTemplate.dragStart(self.dragElement, self.component); 
 
                             self.frameBody.find("[data-cbuilder-"+self.component.builderTemplate.getParentContainerAttr(self.data, self.component)+"]").attr("data-cbuilder-droparea", "");
                         }
